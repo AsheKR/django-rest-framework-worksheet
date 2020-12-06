@@ -7,6 +7,7 @@ from django.db.transaction import Atomic, get_connection
 from rest_framework.routers import BaseRouter
 
 __all__ = (
+    'SolveDecorator',
     'enc',
     'dec',
     'AtomicRollback',
@@ -43,3 +44,14 @@ class AtomicRollback(Atomic):
         connection = get_connection(self.using)
         connection.needs_rollback = True
         super().__exit__(*args, **kwargs)
+
+
+class SolveDecorator:
+    def __init__(self, func):
+        self.func = func
+
+    def __call__(self, *args, **kwargs):
+        with AtomicRollback():
+            result = self.func(*args, **kwargs)
+        print('테스트에 성공하였습니다! 다음 블럭으로 넘어가주세요.')
+        return result
