@@ -12,6 +12,7 @@ model_bakery = "^1.2.1"
 ipython = "^7.19.0"
 notebook = "^6.1.5"
 django-extensions = "^3.0.9"
+deepdiff = "^5.0.2"
 
 [tool.poetry.dev-dependencies]
 
